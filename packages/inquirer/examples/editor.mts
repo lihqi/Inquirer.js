@@ -1,0 +1,33 @@
+/**
+ * Editor prompt example
+ */
+
+import inquirer from '../src/index.mjs';
+
+const questions = [
+  {
+    type: 'editor',
+    name: 'bio',
+    message: 'Please write a short bio of at least 3 lines.',
+    validate(text) {
+      if (text.split('\n').length < 3) {
+        return 'Must be at least 3 lines.';
+      }
+
+      return true;
+    },
+    waitUserInput: true,
+  },
+  {
+    type: 'editor',
+    name: 'edition',
+    message: 'Edit the following content.',
+    default: 'Hello, World!',
+    waitUserInput: false,
+  },
+];
+
+// @ts-expect-error 2024-06-29
+inquirer.prompt(questions).then((answers) => {
+  console.log(JSON.stringify(answers, null, '  '));
+});

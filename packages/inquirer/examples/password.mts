@@ -1,0 +1,32 @@
+/**
+ * Password prompt example
+ */
+
+import inquirer from '../src/index.mjs';
+
+const requireLetterAndNumber = (value) => {
+  if (/\w/.test(value) && /\d/.test(value)) {
+    return true;
+  }
+
+  return 'Password need to have at least a letter and a number';
+};
+
+inquirer
+  // @ts-expect-error 2024-06-29
+  .prompt([
+    {
+      type: 'password',
+      message: 'Enter a password',
+      name: 'password1',
+      validate: requireLetterAndNumber,
+    },
+    {
+      type: 'password',
+      message: 'Enter a masked password',
+      name: 'password2',
+      mask: '*',
+      validate: requireLetterAndNumber,
+    },
+  ])
+  .then((answers) => console.log(JSON.stringify(answers, null, '  ')));
